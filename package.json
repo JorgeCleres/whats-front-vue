@@ -6,11 +6,14 @@
   "author": "",
   "private": true,
   "scripts": {
+    "start": "yarn quasar dev",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "axios": "^0.25.0",
     "core-js": "^3.6.5",
+    "crypto": "^1.0.1",
     "quasar": "^2.0.0"
   },
   "devDependencies": {
@@ -31,5 +34,8 @@
     "node": ">= 12.22.1",
     "npm": ">= 6.13.4",
     "yarn": ">= 1.21.1"
-  }
+  },
+  "browser": {
+    "crypto": false
+}
 }
