@@ -2,12 +2,11 @@
     <div class="chat-area">
         <div class="image full-width full-height">
             <Message 
-                v-for="item in 10"
-                :key="item"
-                :text="'nova mensagem'"
-                :hour="'18:48'"
-                :my="true"
-
+                v-for="item in messages"
+                :key="item.id"
+                :text="item.text"
+                :hour="item.hour"
+                :my="my(item.userId)"
             ></Message>
         </div>
     </div>
@@ -15,14 +14,42 @@
 
 <script>
 import Message from 'src/components/Message/Index'
+import api from 'src/services/api'
+import { notify } from "src/utils"
+
 export default {
-  name: 'MessageBar',
-  components: {
-      Message
-  },
-  data() {
-    return {}
-  }
+    name: 'MessageBar',
+    props: ['currentUser', 'newMessages'],
+    components: {
+        Message
+    },
+    data() {
+        return {
+            messages: [],
+            myId: localStorage.getItem('myId')
+        }
+    },
+    async mounted() {
+        await this.getMessages()
+    },
+    watch: {
+        currentUser() {},
+        newMessages() {}
+    },
+    methods: {
+        async getMessages() {
+            await api.get(`messages/${this.currentUser}/${this.myId}`)
+                .then( response => {
+                    this.messages = response.data
+                })
+                .catch( () => {
+                    notify('negative', 'Falha ao listar mensagens')
+                })
+        },
+        my(messageUserId) {
+            return this.myId === messageUserId.toString()
+        }
+    }
 }
 </script>
 

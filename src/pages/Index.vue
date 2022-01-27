@@ -44,6 +44,7 @@
         color="secondary"
         label="Cadastrar"
         no-caps
+        @click="signUp()"
       ></q-btn>
     </div>
   </q-page>
@@ -64,6 +65,20 @@ export default defineComponent({
       emailSingUp: "",
     }
   },
+  watch: {
+    email() {
+      if(this.email !== "") {
+        this.name = "";
+        this.emailSingUp = ""
+      }
+    },
+    name() {
+      if(this.name !== "") this.email = ""
+    },
+    emailSingUp() {
+      if(this.emailSingUp !== "") this.email = ""
+    }
+  },
   methods:{
     async signIn() {
       if(this.email === "") {
@@ -72,6 +87,20 @@ export default defineComponent({
           await api.get(`/user/${this.email}`)
             .then( response => {
             this.sucess('Login efetuado com sucesso', response.data.id)
+            console.log(response.data.id)
+          }).catch( error => {
+            notify('negative', error.response.data.message)
+          })
+        }
+    },
+    async signUp() {
+      if(this.emailSingUp === "" || this.name === "") {
+        this.fail("Preencha o campo de e-mail e/ou nome")
+      } else {
+          await api.post("user", {name: this.name, email: this.emailSingUp})
+            .then( response => {
+            this.sucess('Cadastro efetuado com sucesso', response.data.id)
+            consolo.log(response)
           }).catch( error => {
             notify('negative', error.response.data.message)
           })
@@ -82,7 +111,8 @@ export default defineComponent({
         this.$router.push({ path: "chat"});
         const receiver = crypto.createHash("md5").update(`${id}`).digest("hex")
         localStorage.setItem("receiver", receiver)
-        localStorage.setItem("myid", id)
+        localStorage.setItem("myId", id)
+        console.log(id)
     },
     fail(message) {
       notify('negative', message)
