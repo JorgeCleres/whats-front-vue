@@ -49,7 +49,7 @@ export default {
     MessageBar
   },
   created() {
-    const receiver = localStorage.getItem('receiver');
+    const receiver = sessionStorage.getItem('receiver');
     socket.on(receiver, message => {
       const arr = [];
       this.users.forEach(item => {

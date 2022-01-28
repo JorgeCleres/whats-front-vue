@@ -84,12 +84,12 @@ export default defineComponent({
       if(this.email === "") {
         this.fail("Preencha o campo de e-mail")
       } else {
-          await api.get(`/user/${this.email}`)
+          await api.get(`user/${this.email}`)
             .then( response => {
             this.sucess('Login efetuado com sucesso', response.data.id)
             console.log(response.data.id)
           }).catch( error => {
-            notify('negative', error.response.data.message)
+            notify('negative', 'Erro ao efetuar login')
           })
         }
     },
@@ -102,7 +102,7 @@ export default defineComponent({
             this.sucess('Cadastro efetuado com sucesso', response.data.id)
             consolo.log(response)
           }).catch( error => {
-            notify('negative', error.response.data.message)
+            notify('negative', 'Erro ao se cadastrar')
           })
         }
     },

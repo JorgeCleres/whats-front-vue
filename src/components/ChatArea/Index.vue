@@ -26,11 +26,13 @@ export default {
     data() {
         return {
             messages: [],
-            myId: localStorage.getItem('myId')
+            // myId: localStorage.getItem('myId')
+            myId: sessionStorage.getItem('myId')
         }
     },
     async mounted() {
         await this.getMessages()
+        console.log(this.myId)
     },
     watch: {
         currentUser() {},
@@ -38,9 +40,10 @@ export default {
     },
     methods: {
         async getMessages() {
-            await api.get(`messages/${this.currentUser}/${this.myId}`)
+            await api.get(`/messages/${this.currentUser}/${this.myId}`)
                 .then( response => {
                     this.messages = response.data
+                    console.log(this.messages)
                 })
                 .catch( () => {
                     notify('negative', 'Falha ao listar mensagens')

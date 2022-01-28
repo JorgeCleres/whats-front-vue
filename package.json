@@ -6,7 +6,7 @@
   "author": "",
   "private": true,
   "scripts": {
-    "start": "yarn quasar dev",
+    "dev": "yarn quasar dev",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
@@ -18,7 +18,8 @@
     "socket.io-client": "^4.4.1"
   },
   "devDependencies": {
-    "@quasar/app": "^3.0.0"
+    "@quasar/app": "^3.0.0",
+    "workbox-webpack-plugin": "^6.0.0"
   },
   "browserslist": [
     "last 10 Chrome versions",
